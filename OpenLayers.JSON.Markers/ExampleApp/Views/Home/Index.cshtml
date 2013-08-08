@@ -37,6 +37,20 @@
             var osmLayer = new OpenLayers.Layer.OSM();
             myMap.addLayer(osmLayer);
             myMap.zoomToMaxExtent();
+
+            var customPois = new OpenLayers.Layer.WebApiPts("My Points",
+            {
+                location: '@Url.Action("", "api/Markers")',
+                projection: myMap.displayProjection,
+                getTitleCallback: function (dataObj) {
+                    return 'Title' + dataObj.userDefinedData;
+                },
+                getDescriptionCallback: function (dataObj) {
+                    return 'Description' + dataObj.userDefinedData;
+                }
+            });
+
+            myMap.addLayer(customPois);
         });
     </script>
 </body>
