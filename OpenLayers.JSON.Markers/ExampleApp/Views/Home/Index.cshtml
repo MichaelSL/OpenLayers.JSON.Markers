@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+	<title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <div id="map" style="width: 100%;"></div>
+    </div>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.js"></script>
+    <script type="text/javascript" src='http://openlayers.org/api/OpenLayers.js'></script>
+    <script type="text/javascript" src="http://svn.osgeo.org/metacrs/proj4js/trunk/lib/proj4js-combined.js"></script>
+    <script type="text/javascript" src="~/Scripts/WebApiPtsLayer.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#map').height(screen.availHeight * 0.92);
+
+            var myMap = new OpenLayers.Map("map", {
+                controls: [
+                    new OpenLayers.Control.Navigation(),
+                    new OpenLayers.Control.PanZoomBar(),
+                    new OpenLayers.Control.ScaleLine({ geodesic: true }),
+                    new OpenLayers.Control.MousePosition()],
+                numZoomLevels: 19,
+                units: 'm',
+                projection: "EPSG:4326",
+                displayProjection: new OpenLayers.Projection("EPSG:4326")
+            });
+
+            var osmLayer = new OpenLayers.Layer.OSM();
+            myMap.addLayer(osmLayer);
+            myMap.zoomToMaxExtent();
+        });
+    </script>
+</body>
+</html>
